@@ -1,5 +1,5 @@
 import { Alert, StyleSheet, TextInput, View } from "react-native";
-import PrimaryButton from "../components/PrimaryButton";
+import PrimaryButton from "../components/ui/PrimaryButton";
 import { useState } from "react";
 import Colors from "../util/colors";
 
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     marginTop: 100,
     marginHorizontal: 24,
     borderRadius: 8,
-    backgroundColor: "#4e0329",
+    backgroundColor: Colors.primary800,
     elevation: 4, // for Android only
     shadowColor: "black", // for IOS only
     shadowOffset: { width: 0, height: 2 }, // for IOS only
