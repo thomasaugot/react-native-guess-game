@@ -6,7 +6,7 @@ import PrimaryButton from "../components/ui/PrimaryButton";
 import Card from "../components/ui/Card";
 import InstructionText from "../components/ui/Instructiontext.js";
 import { Ionicons } from "@expo/vector-icons";
-
+import Colors from "../util/colors";
 const generateRandomBetween = (min, max, exclude) => {
   const randomNumber = Math.floor(Math.random() * (max - min)) + min;
 
@@ -24,12 +24,18 @@ let maxBoundary = 100;
 const GameScreen = ({ userNumber, onGameOver }) => {
   const initialGuess = generateRandomBetween(1, 100, userNumber);
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
+  const [guessRounds, setGuessRounds] = useState([initialGuess]);
 
   useEffect(() => {
     if (currentGuess === userNumber) {
       onGameOver();
     }
   }, [currentGuess, userNumber, onGameOver]);
+
+  useEffect(() => {
+    minBoundary = 1;
+    maxBoundary = 100;
+  }, []);
 
   const nextGuessHandler = (direction) => {
     if (
@@ -49,29 +55,37 @@ const GameScreen = ({ userNumber, onGameOver }) => {
     }
     const newRandomNumber = generateRandomBetween(minBoundary, maxBoundary, currentGuess);
     setCurrentGuess(newRandomNumber);
+    setGuessRounds((prevGuessRounds) => [newRandomNumber, ...prevGuessRounds]);
   };
 
   return (
     <View style={styles.screen}>
       <Title>Opponent's Guess</Title>
       <NumberContainer>{currentGuess}</NumberContainer>
-      <Card>
-        <InstructionText style={styles.InstructionText}>Higher or Lower?</InstructionText>
-        <View style={styles.buttonsContainer}>
-          <View style={styles.buttonContainer}>
-            <PrimaryButton onPress={nextGuessHandler.bind(this, "lower")}>
-              <Ionicons name="md-remove" size={24} color="white" />
-            </PrimaryButton>
+      <View style={styles.controlsContainer}>
+        <Card>
+          <InstructionText style={styles.InstructionText}>Higher or Lower?</InstructionText>
+          <View style={styles.buttonsContainer}>
+            <View style={styles.buttonContainer}>
+              <PrimaryButton onPress={nextGuessHandler.bind(this, "lower")}>
+                <Ionicons name="md-remove" size={24} color="white" />
+              </PrimaryButton>
+            </View>
+            <View style={styles.buttonContainer}>
+              <PrimaryButton onPress={nextGuessHandler.bind(this, "greater")}>
+                <Ionicons name="md-add" size={24} color="white" />
+              </PrimaryButton>
+            </View>
           </View>
-          <View style={styles.buttonContainer}>
-            <PrimaryButton onPress={nextGuessHandler.bind(this, "greater")}>
-              <Ionicons name="md-add" size={24} color="white" />
-            </PrimaryButton>
-          </View>
-        </View>
-      </Card>
+        </Card>
+      </View>
+
       <View>
-        <Text>Log Rounds</Text>
+        <View>
+          {guessRounds.map((round) => (
+            <Text key={round}>{round}</Text>
+          ))}
+        </View>
       </View>
     </View>
   );
@@ -93,5 +107,11 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 1,
+  },
+  controlsContainer: {
+    backgroundColor: Colors.primary800,
+    padding: 20,
+    borderRadius: 25,
+    marginTop: 40,
   },
 });

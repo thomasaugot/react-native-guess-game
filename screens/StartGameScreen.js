@@ -30,26 +30,28 @@ const StartGameScreen = ({ onPickNumber }) => {
   return (
     <View style={styles.rootContainer}>
       <Title>Guess my Number</Title>
-      <Card>
-        <InstructionText>Enter a Number</InstructionText>
-        <TextInput
-          style={styles.numberInput}
-          maxLength={2}
-          keyboardType="number-pad"
-          autoCapitalize="none"
-          autoCorrect={false}
-          onChangeText={numberInputhandler}
-          value={enteredNumber}
-        />
-        <View style={styles.buttonsContainer}>
-          <View style={styles.buttonContainer}>
-            <PrimaryButton>Reset</PrimaryButton>
+      <View style={styles.instructionContainer}>
+        <Card>
+          <InstructionText>Enter a Number</InstructionText>
+          <TextInput
+            style={styles.numberInput}
+            maxLength={2}
+            keyboardType="number-pad"
+            autoCapitalize="none"
+            autoCorrect={false}
+            onChangeText={numberInputhandler}
+            value={enteredNumber}
+          />
+          <View style={styles.buttonsContainer}>
+            <View style={styles.buttonContainer}>
+              <PrimaryButton>Reset</PrimaryButton>
+            </View>
+            <View style={styles.buttonContainer}>
+              <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
+            </View>
           </View>
-          <View style={styles.buttonContainer}>
-            <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
-          </View>
-        </View>
-      </Card>
+        </Card>
+      </View>
     </View>
   );
 };
@@ -81,5 +83,11 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     width: "50%",
+  },
+  instructionContainer: {
+    backgroundColor: Colors.primary800,
+    padding: 20,
+    borderRadius: 25,
+    marginTop: 40,
   },
 });
