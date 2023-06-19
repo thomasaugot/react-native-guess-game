@@ -71,11 +71,15 @@ const styles = StyleSheet.create({
     color: Colors.accent500,
     marginVertical: 8,
     fontWeight: "bold",
+    textAlign: "center",
+    alignSelf: "center",
   },
+
   buttonsContainer: {
     flexDirection: "row",
+    marginTop: 20,
   },
   buttonContainer: {
-    flex: 1,
+    width: "50%",
   },
 });
