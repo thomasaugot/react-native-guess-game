@@ -29,7 +29,7 @@ const StartGameScreen = ({ onPickNumber }) => {
 
   return (
     <View style={styles.rootContainer}>
-      <Title>Guess my Number</Title>
+      <Title style={styles.title}>Guess my Number</Title>
       <View style={styles.instructionContainer}>
         <Card>
           <InstructionText>Enter a Number</InstructionText>
@@ -60,9 +60,12 @@ export default StartGameScreen;
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
-    marginTop: 100,
+    justifyContent: "center",
     marginHorizontal: 40,
     alignItems: "center",
+  },
+  title: {
+    borderRadius: 90,
   },
   numberInput: {
     height: 50,

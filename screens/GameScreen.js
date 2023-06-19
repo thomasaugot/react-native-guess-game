@@ -1,4 +1,4 @@
-import { View, StyleSheet, Alert, Text } from "react-native";
+import { View, StyleSheet, Alert, Text, FlatList } from "react-native";
 import Title from "../components/ui/Title";
 import { useState, useEffect } from "react";
 import NumberContainer from "../components/game/NumberContainer";
@@ -7,6 +7,7 @@ import Card from "../components/ui/Card";
 import InstructionText from "../components/ui/Instructiontext.js";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../util/colors";
+import GuessLogItem from "../components/game/GuessLogItem";
 const generateRandomBetween = (min, max, exclude) => {
   const randomNumber = Math.floor(Math.random() * (max - min)) + min;
 
@@ -28,7 +29,7 @@ const GameScreen = ({ userNumber, onGameOver }) => {
 
   useEffect(() => {
     if (currentGuess === userNumber) {
-      onGameOver();
+      onGameOver(guessRounds.length);
     }
   }, [currentGuess, userNumber, onGameOver]);
 
@@ -58,6 +59,8 @@ const GameScreen = ({ userNumber, onGameOver }) => {
     setGuessRounds((prevGuessRounds) => [newRandomNumber, ...prevGuessRounds]);
   };
 
+  const guessRoundsListLength = guessRounds.length;
+
   return (
     <View style={styles.screen}>
       <Title>Opponent's Guess</Title>
@@ -79,13 +82,17 @@ const GameScreen = ({ userNumber, onGameOver }) => {
           </View>
         </Card>
       </View>
-
-      <View>
-        <View>
-          {guessRounds.map((round) => (
-            <Text key={round}>{round}</Text>
-          ))}
-        </View>
+      <View style={styles.listContainer}>
+        <FlatList
+          data={guessRounds}
+          renderItem={(itemData) => (
+            <GuessLogItem
+              roundNumber={guessRoundsListLength - itemData.index}
+              guess={itemData.item}
+            />
+          )}
+          keyExtractor={(item) => item}
+        />
       </View>
     </View>
   );
@@ -113,5 +120,8 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 25,
     marginTop: 40,
+  },
+  listContainer: {
+    flex: 1,
   },
 });
