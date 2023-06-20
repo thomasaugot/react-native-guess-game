@@ -106,6 +106,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingVertical: 54,
     alignItems: "center",
+    justifyContent: "center",
   },
   InstructionText: {
     marginBottom: 12,
