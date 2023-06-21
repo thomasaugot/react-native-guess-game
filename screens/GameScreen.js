@@ -1,4 +1,4 @@
-import { View, StyleSheet, Alert, Text, FlatList } from "react-native";
+import { View, useWindowDimensions, StyleSheet, Alert, Text, FlatList } from "react-native";
 import Title from "../components/ui/Title";
 import { useState, useEffect } from "react";
 import NumberContainer from "../components/game/NumberContainer";
@@ -26,6 +26,7 @@ const GameScreen = ({ userNumber, onGameOver }) => {
   const initialGuess = generateRandomBetween(1, 100, userNumber);
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
   const [guessRounds, setGuessRounds] = useState([initialGuess]);
+  const { width, height } = useWindowDimensions();
 
   useEffect(() => {
     if (currentGuess === userNumber) {
@@ -61,9 +62,8 @@ const GameScreen = ({ userNumber, onGameOver }) => {
 
   const guessRoundsListLength = guessRounds.length;
 
-  return (
-    <View style={styles.screen}>
-      <Title>Opponent's Guess</Title>
+  let content = (
+    <>
       <NumberContainer>{currentGuess}</NumberContainer>
       <View style={styles.controlsContainer}>
         <Card>
@@ -82,6 +82,39 @@ const GameScreen = ({ userNumber, onGameOver }) => {
           </View>
         </Card>
       </View>
+    </>
+  );
+
+  if (width > 500) {
+    return (
+      <>
+        <NumberContainer>{currentGuess}</NumberContainer>
+        <View style={styles.controlsContainer}>
+          <Card>
+            <InstructionText style={styles.InstructionText}>Higher or Lower?</InstructionText>
+            <View style={styles.buttonsContainer}>
+              <View style={styles.buttonContainer}>
+                <PrimaryButton onPress={nextGuessHandler.bind(this, "lower")}>
+                  <Ionicons name="md-remove" size={24} color="white" />
+                </PrimaryButton>
+              </View>
+              <View style={styles.buttonContainer}>
+                <PrimaryButton onPress={nextGuessHandler.bind(this, "greater")}>
+                  <Ionicons name="md-add" size={24} color="white" />
+                </PrimaryButton>
+              </View>
+            </View>
+          </Card>
+        </View>
+      </>
+    );
+  }
+
+  return (
+    // these should return the landscape mode styles
+    <View style={styles.screen}>
+      <Title>Opponent's Guess</Title>
+      {content}
       <View style={styles.listContainer}>
         <FlatList
           data={guessRounds}

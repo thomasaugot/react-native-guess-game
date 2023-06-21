@@ -21,6 +21,7 @@ export default function App() {
   const [fontsLoaded] = useFonts({
     "open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
     "open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf"),
+    "rajdhani-medium": require("./assets/fonts/Rajdhani-Medium.ttf"),
   });
 
   if (!fontsLoaded) {

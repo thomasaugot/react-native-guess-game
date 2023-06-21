@@ -115,6 +115,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary800,
     padding: 20,
     borderRadius: 25,
-    marginTop: 40,
+    margin: 40,
   },
 });
